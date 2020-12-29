@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from "../views/Login/Login";
 import Home from "../views/Home/Home";
 import Register from "../views/Register/Register";
+import Index from "../views/Home/Index";
 
 Vue.use(VueRouter)
 
@@ -24,12 +25,18 @@ const routes = [
     hidden: true,
     children: [
       {
+        path: '',
+        component: Index
+      },
+      {
         path: 'index',
         name: 'index',
+        component: Index
       },
       {
         path: 'detail/:id',
-        name: 'detail'
+        name: 'detail',
+        component: Login
       }
     ]
   },

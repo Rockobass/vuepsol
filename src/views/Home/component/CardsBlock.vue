@@ -4,8 +4,8 @@
             <div style="margin-left: 10px"><h1>{{title}}</h1></div>
             <div style="display: flex;">
                 <el-card class="lcard" :body-style="{padding: '6px'}">
-                    <el-image :src="goods[0].coverImg" style="height: 210px" fit="cover"></el-image>
-                    <p class="p1">{{goods[0].name}}</p>
+                    <el-image :src="goods[0].coverImg" style="height: 210px;cursor: pointer" fit="cover" @click="toDetail(goods[0].id)"></el-image>
+                    <p class="p1" style="cursor: pointer;" @click="toDetail(goods[0].id)">{{goods[0].name}}</p>
                     <div style="display: flex;justify-content: space-evenly">
                         <span>￥{{goods[0].lowPrice}}</span>
                         <span style="text-decoration: line-through">￥{{goods[0].highPrice}}</span>
@@ -44,6 +44,11 @@
             goods: {
                 type: Array
             }
+        },
+        methods: {
+            toDetail(id) {
+                this.$router.push('/home/detail/'+ id)
+            }
         }
     }
 </script>
@@ -57,7 +62,6 @@
     .lcard{
         width: 200px;
         height: 300px;
-        cursor: pointer;
     }
 
     .p1 {

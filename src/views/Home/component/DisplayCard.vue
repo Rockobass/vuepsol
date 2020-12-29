@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-card class="listcard">
-      <el-image :src="product.coverImg" style="height: 210px" fit="cover"></el-image>
-      <p class="nm">{{product.name}}</p>
+      <el-image :src="product.coverImg" style="height: 210px;cursor: pointer" fit="cover" @click="toDetail(product.id)"></el-image>
+      <p class="nm" @click="toDetail(product.id)">{{product.name}}</p>
       <div style="display: flex;justify-content: start;margin-left: 4px;">
         <span style="position: relative;top: -10px">￥{{product.lowPrice}}</span>
       </div>
@@ -17,6 +17,11 @@
       product: {
         type: Object
       }
+    },
+    methods: {
+      toDetail(id) {
+        this.$router.push('/home/detail/'+ id)
+      }
     }
   }
 </script>
@@ -30,6 +35,7 @@
     margin-bottom: 5px;
   }
   .nm {
+    cursor: pointer;
     text-indent: 3px;
     font-size: 15px;
     display: flex;

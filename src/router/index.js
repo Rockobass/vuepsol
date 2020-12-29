@@ -14,14 +14,24 @@ const routes = [
     hidden: false
   },
   {
-    path: '/',
-    redirect: '/home'
+    path: '',
+    redirect: '/home',
   },
   {
     path: '/home',
     name: 'Home',
     component: Home,
-    hidden: true
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+      },
+      {
+        path: 'detail/:id',
+        name: 'detail'
+      }
+    ]
   },
   {
     path:'/register',

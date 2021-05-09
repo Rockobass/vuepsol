@@ -1,16 +1,22 @@
 <template>
     <div>
-        <el-container>
+        <el-container style="height: 100vh">
             <el-header class="header">
                 <div class="hd">
                     <div>
-                        <router-link to="">我的订单</router-link>
+                        <router-link to="/home/index">首页</router-link>
                     </div>
                     <div>
-                        <router-link to="">申请开店</router-link>
+                        <router-link to="/home/cart">购物车</router-link>
                     </div>
                     <div>
-                        <router-link to="">收货地址</router-link>
+                        <router-link to="/myOrder">我的订单</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/home/openStore">申请开店</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/myAddress">收货地址</router-link>
                     </div>
                     <div>
                         <el-dropdown class="userInfo" @command="commandHandler">
@@ -24,7 +30,8 @@
                 </div>
 
             </el-header>
-            <router-view></router-view>
+
+            <router-view style="height: 100%"></router-view>
         </el-container>
     </div>
 </template>
@@ -45,7 +52,7 @@
                     this.$store.state.user = null;
                     this.$router.replace('/login')
                 } else if (cmd === 'profile') {
-
+                    this.$router.push('/home/profile')
                 }
             },
         },

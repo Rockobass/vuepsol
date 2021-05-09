@@ -14,6 +14,8 @@ import {
 } from "./network/request";
 
 import qs from 'qs'
+import { InfiniteScroll } from 'element-ui';
+Vue.use(InfiniteScroll)
 
 Vue.use(ElementUI);
 

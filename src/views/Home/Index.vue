@@ -1,5 +1,5 @@
 <template>
-  <div class="dd">
+  <div class="dd" style="height: 100%;overflow: auto" v-infinite-scroll="loadMore" infinite-scroll-delay="200" infinite-scroll-distance="100px">
     <el-container class="main">
       <div style="text-align: center;margin-top: 50px;margin-bottom: 30px">
         <div class="search" style="width: 600px;margin: 0 auto">
@@ -10,7 +10,7 @@
 
         <div class="carousel">
           <el-carousel :interval="4000" type="card" height="360px" style="width: 1300px">
-            <el-carousel-item v-for="item in this.swipperUrls" :key="item">
+            <el-carousel-item v-for="item in this.swipperUrls"  :key="item">
               <el-image
                       style="height: 360px;width: 100%"
                       :src="item"
@@ -43,7 +43,7 @@
           </el-tabs>
         </div>
 
-        <div style="display: flex;flex-wrap: wrap;width: 1300px">
+        <div style="display: flex;flex-wrap: wrap;width: 1300px;overflow: auto;">
           <display-card v-for="(item, index) in display.list" :product="display.list[index]"></display-card>
         </div>
 
@@ -60,7 +60,7 @@
     name: "Index",
     components: {
       CardsBlock,
-      DisplayCard
+      DisplayCard,
     },
     data() {
       return {
@@ -101,9 +101,20 @@
         this.display.current = this.goods[name].current;
         this.display.list = this.goods[name].list
         // this.activeName = name
-      }
+      },
+      loadMore() {
+        let name = this.activeName
+        this.getRequest('/api/common/type',{type:this.activeName,page:this.goods[this.activeName].current}).then(res => {
+          for (let i = 0; i < res.length; i++) {
+            res[i].coverImg = '/api' + res[i].coverImg
+          }
+
+          this.goods[name].list.push(...res);
+          this.goods[name].current += 1
+        })
+      },
     },
-    mounted() {
+    created() {
       this.getRequest('/api/common/home').then(resp => {
         this.swipperUrls = resp.swipper;
         for (var i=0;i<this.swipperUrls.length;i++) {
@@ -124,18 +135,19 @@
         this.goods['1'].list = resp.goods;
         for (let i = 0; i < resp.goods.length; i++) {
           this.goods['1'].list[i].coverImg = '/api' + this.goods['1'].list[i].coverImg;
-          this.goods['1'].current += 1
         }
+        this.goods['1'].current = 2
         this.display.current = this.goods['1'].current;
         this.display.list = this.goods['1'].list
 
       })
-    }
+    },
   }
 </script>
 
 <style scoped>
   .dd {
+    height: 100%;
     margin: 0 auto;
   }
   .main {
@@ -181,4 +193,10 @@
   .el-tabs__active-bar{
     background-color:rgb(73,178,82);
   }
+
+
+  div::-webkit-scrollbar {
+    width: 0;
+  }
+
 </style>
